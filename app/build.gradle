@@ -3,15 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.hiya.jacoco-android'
-apply plugin: 'com.akaita.android.easylauncher'
+apply plugin: "com.starter.easylauncher"
 
 android {
     compileSdkVersion 30
-
-    dexOptions {
-        jumboMode = true
-        javaMaxHeapSize "4g"
-    }
 
     packagingOptions {
         exclude 'proguard-project.txt'
@@ -28,7 +23,7 @@ android {
         applicationId "com.amaze.filemanager"
         minSdkVersion 14
         targetSdkVersion 30
-        versionCode 106
+        versionCode 107
         versionName "3.6.7"
         multiDexEnabled true
 
@@ -37,7 +32,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments += ["room.schemaLocation"  : "$projectDir/schemas".toString(),
+                arguments += ["room.schemaLocation"  : "$projectDir/src/test/resources/schemas".toString(),
                               "room.incremental"     : "true",
                               "room.expandProjection": "true"]
             }
@@ -56,6 +51,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
             testProguardFile 'tests-proguard.cfg'
             buildConfigField "String", "CRYPTO_IV", "\"LxbHiJhhUXcj\""
+            debuggable true //For "debug" banner on icon
         }
 
         release {
@@ -133,7 +129,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     // RxJava support for Room
     implementation "androidx.room:room-rxjava2:$roomVersion"
-    kapt 'androidx.annotation:annotation:1.1.0'
+    kapt 'androidx.annotation:annotation:1.2.0'
 
     implementation "androidx.preference:preference:$androidXPrefVersion"
     implementation "androidx.preference:preference-ktx:$androidXPrefVersion"
@@ -167,9 +163,9 @@ dependencies {
     androidTestImplementation "org.awaitility:awaitility:$awaitilityVersion"
 
     //Detect memory leaks
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
-    implementation 'org.apache.commons:commons-compress:1.18'
+    implementation "org.apache.commons:commons-compress:$commonsCompressVersion"
 
     implementation "com.github.junrar:junrar:$junrarVersion"
 
@@ -196,7 +192,7 @@ dependencies {
 
     implementation 'org.greenrobot:eventbus:3.1.1'
 
-    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.android.volley:volley:1.2.1'
 
     implementation 'eu.chainfire:libsuperuser:1.0.0.+'
 
@@ -242,7 +238,7 @@ dependencies {
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
     // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
-    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.1'
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.9'
 
     implementation project(':commons_compress_7z')
     implementation project(':file_operations')
@@ -278,10 +274,6 @@ project.afterEvaluate {
 
 clean.dependsOn supportOldLangCodes
 clean.mustRunAfter supportOldLangCodes
-
-easylauncher {
-    foregroundIconNames "@mipmap/ic_launcher_foreground" // Foreground of adaptive launcher icon
-}
 
 jacoco {
     toolVersion = "${jacocoVersion}"

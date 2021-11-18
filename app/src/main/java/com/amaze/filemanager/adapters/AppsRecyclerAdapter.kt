@@ -280,7 +280,7 @@ class AppsRecyclerAdapter(
             if ((
                 fragment.requireActivity()
                     as MainActivity
-                ).appTheme.simpleTheme == AppTheme.BLACK
+                ).appTheme.getSimpleTheme(fragment.requireContext()) == AppTheme.BLACK
             ) {
                 context = ContextThemeWrapper(context, R.style.overflow_black)
             }
@@ -466,7 +466,7 @@ class AppsRecyclerAdapter(
             MaterialDialog.Builder(fragment.requireContext())
         builder1
             .theme(
-                themedActivity.appTheme.materialDialogTheme
+                themedActivity.appTheme.getMaterialDialogTheme(fragment.requireContext())
             )
             .content(fragment.getString(R.string.unin_system_apk))
             .title(fragment.getString(R.string.warning))

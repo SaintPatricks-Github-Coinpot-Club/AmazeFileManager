@@ -126,7 +126,7 @@ class SftpConnectDialog : DialogFragment() {
             .title(R.string.scp_connection)
             .autoDismiss(false)
             .customView(binding.root, true)
-            .theme(utilsProvider.appTheme.materialDialogTheme)
+            .theme(utilsProvider.appTheme.getMaterialDialogTheme(context))
             .negativeText(R.string.cancel)
             .positiveText(if (edit) R.string.update else R.string.create)
             .positiveColor(accentColor)

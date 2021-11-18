@@ -1127,7 +1127,7 @@ public class MainActivity extends PermissionsActivity
             case R.id.dsort:
               String[] sort = getResources().getStringArray(R.array.directorysortmode);
               MaterialDialog.Builder builder = new MaterialDialog.Builder(mainActivity);
-              builder.theme(getAppTheme().getMaterialDialogTheme());
+              builder.theme(getAppTheme().getMaterialDialogTheme(this));
               builder.title(R.string.directorysort);
               int current =
                   Integer.parseInt(
@@ -1398,7 +1398,7 @@ public class MainActivity extends PermissionsActivity
 
   public void updatePaths(int pos) {
     TabFragment tabFragment = getTabFragment();
-    if (tabFragment != null) tabFragment.updatepaths(pos);
+    if (tabFragment != null) tabFragment.updatePaths(pos);
   }
 
   public void openCompressed(String path) {
@@ -1433,7 +1433,7 @@ public class MainActivity extends PermissionsActivity
   }
 
   public void setPagingEnabled(boolean b) {
-    getTabFragment().mViewPager.setPagingEnabled(b);
+    getTabFragment().setPagingEnabled(b);
   }
 
   public File getUsbDrive() {
@@ -1652,7 +1652,7 @@ public class MainActivity extends PermissionsActivity
     getSupportActionBar().setDisplayShowTitleEnabled(false);
     fabBgView = findViewById(R.id.fabs_overlay_layout);
 
-    switch (getAppTheme().getSimpleTheme()) {
+    switch (getAppTheme().getSimpleTheme(this)) {
       case DARK:
         fabBgView.setBackgroundResource(R.drawable.fab_shadow_dark);
         break;
@@ -1731,7 +1731,7 @@ public class MainActivity extends PermissionsActivity
           if (event.getAction() == KeyEvent.ACTION_DOWN) {
             if (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_RIGHT) {
               if (getCurrentTab() == 0 && getFAB().isFocused()) {
-                getTabFragment().mViewPager.setCurrentItem(1);
+                getTabFragment().setCurrentItem(1);
               }
             } else if (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT) {
               findViewById(R.id.content_frame).requestFocus();
@@ -1780,7 +1780,7 @@ public class MainActivity extends PermissionsActivity
             .setLabel(fabTitle)
             .setFabBackgroundColor(iconSkin);
 
-    switch (getAppTheme().getSimpleTheme()) {
+    switch (getAppTheme().getSimpleTheme(this)) {
       case LIGHT:
         fabBgView.setBackgroundResource(R.drawable.fab_shadow_light);
         break;

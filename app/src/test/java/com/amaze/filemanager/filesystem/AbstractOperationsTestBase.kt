@@ -42,7 +42,7 @@ import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.robolectric.Shadows
@@ -115,17 +115,20 @@ abstract class AbstractOperationsTestBase {
             Shadows.shadowOf(Looper.getMainLooper()).idle()
 
             Shadows.shadowOf(activity).broadcastIntents.run {
-                Assert.assertNotNull(this)
-                Assert.assertTrue(this.size > 0)
+                assertNotNull(this)
+                assertTrue(this.size > 0)
                 this[0].apply {
-                    Assert.assertEquals(MainActivity.TAG_INTENT_FILTER_GENERAL, this.action)
+                    assertEquals(MainActivity.TAG_INTENT_FILTER_GENERAL, this.action)
                     this
                         .getParcelableArrayListExtra<HybridFileParcelable>(
                             MainActivity.TAG_INTENT_FILTER_FAILED_OPS
                         )
                         .run {
-                            Assert.assertTrue(this!!.size > 0)
-                            Assert.assertEquals(oldFilePath, this!![0].path)
+                            assertNotNull(this)
+                            this?.let {
+                                assertTrue(it.size > 0)
+                                assertEquals(oldFilePath, it[0].path)
+                            }
                         }
                 }
             }
